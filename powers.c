@@ -1,6 +1,10 @@
 #include <stdio.h>
 #include <math.h>
 
+/* Allows for multiple functions to write to the same file
+ * because global variables are easier than passing them down*/
+FILE *store;
+
 /* A recursive function which generates an array of differences and
  * reiterates on new array until all numbers are the same*/
 int findDiff(int numbers[],int size)
@@ -23,6 +27,9 @@ int main(int argc, char **argv)
     //Stores final output
     int results[10];
 
+    //Initializes file
+    store = fopen("results.txt", "w");
+
     //generates results (max size = 9 because 10^10 > maximum int size)
     for(int i = 1;i <= 9;i++)
     {
@@ -31,9 +38,14 @@ int main(int argc, char **argv)
         for(int j = 0;j <= 10;j++)
             powers[j] = (int) pow(j, i);
         
-        //Generates individual results
+        //Generates individual results + prints current iteration to file
+        fprintf(store, "Pattern for x ^ %i\n", i);
         results[i-1] = findDiff(powers, 11);
+        fprintf(store, "\n\n");
     }
+
+    //closes file
+    fclose(store);
 
     //prints results to terminal
     for(int i = 0;i < 10;i++)

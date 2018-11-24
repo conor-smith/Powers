@@ -1,0 +1,1 @@
+powers must be compiled with -lm tag at end
