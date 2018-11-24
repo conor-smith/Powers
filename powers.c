@@ -7,17 +7,17 @@ FILE *store;
 
 /* A recursive function which generates an array of differences and
  * reiterates on new array until all numbers are the same*/
-int findDiff(int numbers[],int size)
+int findDiff(double numbers[], int size)
 {
     //generates a new array for storing differences in previous array
-    int newNumbers[size-1];
+    double newNumbers[size-1];
 
     for(int i = 0;i < size-1;i++)
         newNumbers[i] = numbers[i+1] - numbers[i];
     
     //Prints to text file
     for(int i = 0;i < size-1;i++)
-        fprintf(store, "%i, ", newNumbers[i]);
+        fprintf(store, "%.0f, ", newNumbers[i]);
     fprintf(store, "\n");
 
     //Either returns or reiterates
@@ -27,26 +27,26 @@ int findDiff(int numbers[],int size)
         return findDiff(newNumbers, size-1);
 }
 
-int main(int argc, char **argv)
+int main()
 {
     //Stores final output
-    int results[10];
+    double results[10];
 
     //Initializes file
     store = fopen("results.txt", "w");
 
-    //generates results (max size = 9 because 10^10 > maximum int size)
+    //generates results
     for(int i = 1;i <= 9;i++)
     {
         //Generates array {0 ^ i, 1 ^ i...10 ^ i}
-        int powers[11];
+        double powers[11];
         for(int j = 0;j <= 10;j++)
-            powers[j] = (int) pow(j, i);
+            powers[j] = pow(j, i);
         
         //Generates individual results + prints current iteration to file
         fprintf(store, "Pattern for x ^ %i\n", i);
         for(int j = 0;j <=10;j++)
-            fprintf(store, "%i, ", powers[j]);
+            fprintf(store, "%.0f, ", powers[j]);
         fprintf(store, "\n");
         results[i-1] = findDiff(powers, 11);
         fprintf(store, "\n");
@@ -57,6 +57,6 @@ int main(int argc, char **argv)
 
     //prints results to terminal
     for(int i = 0;i < 9;i++)
-        printf("%i, ", results[i]);
+        printf("%.0f, ", results[i]);
     printf("\n");
 }
