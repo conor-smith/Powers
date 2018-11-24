@@ -15,6 +15,11 @@ int findDiff(int numbers[],int size)
     for(int i = 0;i < size-1;i++)
         newNumbers[i] = numbers[i+1] - numbers[i];
     
+    //Prints to text file
+    for(int i = 0;i < size-1;i++)
+        fprintf(store, "%i, ", newNumbers[i]);
+    fprintf(store, "\n");
+
     //Either returns or reiterates
     if(newNumbers[0] == newNumbers[1])
         return newNumbers[0];
@@ -40,15 +45,18 @@ int main(int argc, char **argv)
         
         //Generates individual results + prints current iteration to file
         fprintf(store, "Pattern for x ^ %i\n", i);
+        for(int j = 0;j <=10;j++)
+            fprintf(store, "%i, ", powers[j]);
+        fprintf(store, "\n");
         results[i-1] = findDiff(powers, 11);
-        fprintf(store, "\n\n");
+        fprintf(store, "\n");
     }
 
     //closes file
     fclose(store);
 
     //prints results to terminal
-    for(int i = 0;i < 10;i++)
+    for(int i = 0;i < 9;i++)
         printf("%i, ", results[i]);
     printf("\n");
 }
